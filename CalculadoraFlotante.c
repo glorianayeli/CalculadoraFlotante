@@ -1,7 +1,6 @@
 #include <18F4620.h>
-#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+#include <matematica.h>
 #fuses HS, NOFCMEN, NOIESO, PUT, NOBROWNOUT, NOWDT
 #fuses NOPBADEN, NOMCLR, STVREN, NOLVP, NODEBUG
 #use delay(clock=16000000)
@@ -14,11 +13,6 @@
    #use RS232(BAUD=9600, XMIT=TX_232, BITS=8,PARITY=N, STOP=1,UART1,RCV=RX_232)
    #use fast_io(c)
 #endif 
-
-   //declaracion de funciones
-int opcion (char opcion_ingresada);
-int conversion_entero(char vector_numero[],int tamano);
-int operacion(int numero1,int numero2,int opcion);
 
 //declaracion de vectores
 char buffer[9]={""};
@@ -33,7 +27,7 @@ char bandera;
 char caracter_recibido;
 
 //operaciones aritmeticas
-int numero1=0,numero2=0;
+float num1,num2,resultado;
 #bit flagSerial = bandera.0
 //Recepcion de datos dentro del buffer
 #INT_RDA
@@ -49,6 +43,13 @@ void isrRDA (void)
    {
       flagEnter=1;     
    }
+   //valida backspaces
+   if(caracter_recibido==0x08)
+   {
+      buffer[contador_buf-1]=0;
+      buffer[contador_buf-2]=0;
+      contador_buf-=2;
+   }
    flagSerial=1;
    flagEcho=1;
 }
@@ -58,6 +59,8 @@ void main (void){
    //habilito mi interrupcion
    enable_interrupts(INT_RDA);
    enable_interrupts(GLOBAL);
+   printf("\nIngresar una de las siguientes opciones: \n"); 
+   printf("\ns)Suma \n r)Resta \n m)Multiplicacion \n d)Division\n");
    //inicio mi ciclo while
    while(1){
          if(flagEcho==1)
@@ -65,20 +68,19 @@ void main (void){
             putc(caracter_recibido);
             flagEcho=0;
          }
-         
          if(tarea_programa==1&&flagMostrar==1)
          {
-            printf("Ingresa Opción: \t");
+            printf("\nIngresa Opción: \t\n");
             flagMostrar=0;
          }
          else if(tarea_programa==2&&flagMostrar==1)
          {
-            printf("Ingresa Numero1: \t");
+            printf("\nIngresa Numero1: \t\n");
             flagMostrar=0;
          }
          else if(tarea_programa==3&&flagMostrar==1)
          {
-            printf("Ingresa Numero2: \t");
+            printf("\nIngresa Numero2: \t\n");
             flagMostrar=0;
          }
 
@@ -96,6 +98,7 @@ void main (void){
             }
             else if(tarea_programa==2)
             {
+               num1=conversion(buffer,9);
                contador_buf=0;
                flagSerial=0;
                flagEnter=0;
@@ -104,6 +107,7 @@ void main (void){
             }
             else if(tarea_programa==3)
             {
+               num2=conversion(buffer,9);
                tarea_programa=4;
                contador_buf=0;
                flagMostrar=1;
@@ -114,8 +118,13 @@ void main (void){
          }
          if(tarea_programa==4)
          {
+            resultado=operacion(opcion_ingresada,num1,num2);
+            printf("\nEl resultado es: %.4f\n",resultado);
             flagSerial=0;
             tarea_programa=1;    
          }
    }
-}  
+   
+}
+
+
