@@ -19,6 +19,7 @@ float operacion (char opcion, float num1, float num2)
       case 'd':
       case 'D':
       resultado=num1/num2;
+      break;
    }
    return resultado;
 }
