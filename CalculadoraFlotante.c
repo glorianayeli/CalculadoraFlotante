@@ -6,7 +6,6 @@
 #fuses NOPBADEN, NOMCLR, STVREN, NOLVP, NODEBUG
 #use delay(clock=16000000)
 
-
 //declarion de variables de almacenamiento
 char opcion_ingresada;
 
