@@ -1,4 +1,3 @@
-
 //Realiza la operación de dos numeros
 float operacion (char opcion, float num1, float num2)
 {  
