@@ -45,11 +45,18 @@ void main (void)
             if(tarea_programa==1)
             {
                opcion_ingresada=buffer[0];
+               if(opcion_ingresada==('s'||'S')||opcion_ingresada==('r'||'R')||opcion_ingresada==('d'||'D')||opcion_ingresada==('m'||'M'))
+               {
+                  tarea_programa=2;
+               }
+               else 
+               {
+                  tarea_programa=1;
+               }
                contador_buf=0;
                flagSerial=0;
                flagEnter=0;
-               flagMostrar=1;
-               tarea_programa=2;
+               flagMostrar=1;              
             }
             else if(tarea_programa==2)
             {
@@ -63,6 +70,10 @@ void main (void)
             else if(tarea_programa==3)
             {
                num2=conversion(buffer,9);
+               if((opcion_ingresada=='d'||opcion_ingresada=='D')&&(num2==0))
+               {  
+                  printf("Error");
+               }
                tarea_programa=4;
                contador_buf=0;
                flagMostrar=1;
