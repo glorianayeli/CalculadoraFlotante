@@ -2,20 +2,20 @@
 /*Necesaria para utilizar la salida serial para las impresiones*/
 #use delay(clock=16000000)
 //variables de interrupcion
-int flagSerial=0,flagMostrar=1, flagEnter=0, flagEcho=0;
-int contador_buf=0;
+int FlagSerial=0,FlagMostrar=1, FlagEnter=0, FlagEcho=0;
+int ContadorBuf=0;
 
 /*Diferentes funciones a utilizar*/
 //declaracion de vectores
-char buffer[9]={""};
-char caracter_recibido;
+char Buffer[9]={""};
+char CaracterRecibido;
 /*Deacuerdo a la tarea enviada y el estado de la bandera mostrar es la tarea que mandara*/
 
 
 /*Declarando la interrupcion para la recepcion de datos del sistema*/
 //#INT_RDA
 
-//void(isrRDA)(char buffer, int &contador_buf, char *caracter_recibido, int &flagEnter, int &flagEcho,int &flagSerial);
+//void(isrRDA)(char Buffer, int &ContadorBuf, char *CaracterRecibido, int &FlagEnter, int &FlagEcho,int &FlagSerial);
 
 
 #define __DEBUG_SERIAL__ //Si comentas esta linea se deshabilita el debug por serial y el PIN_C6 puede ser usado en forma digital I/O
@@ -27,53 +27,53 @@ char caracter_recibido;
    #use fast_io(c)
 #endif 
 
-void mostrar (int &tarea_programa, int &flagMostrar);
-void llenar(char buffer, int &contador_buf, char caracter_recibido, int *flagEnter);
+void mostrar (int &TareaPrograma, int &FlagMostrar);
+void llenar(char Buffer, int &ContadorBuf, char CaracterRecibido, int *FlagEnter);
 /*Llena el fubber con los caracteres disponible por medio 
 de la interrupcion*/
 #INT_RDA
 void isrRDA (void)
 {
-   flagSerial=1;
-   flagEcho=1;
-   caracter_recibido = getc();  
-   if(contador_buf<10)
+   FlagSerial=1;
+   FlagEcho=1;
+   CaracterRecibido = getc();  
+   if(ContadorBuf<10)
    { 
-      buffer[contador_buf]= caracter_recibido;
-      contador_buf++; 
+      Buffer[ContadorBuf]= CaracterRecibido;
+      ContadorBuf++; 
    }
 }
-void llenar (char buffer[], int &contador_buf, char *caracter_recibido, int *flagEnter)
+void llenar (char Buffer[], int &ContadorBuf, char *CaracterRecibido, int *FlagEnter)
 {
-   if(*caracter_recibido==0x0D)
+   if(*CaracterRecibido==0x0D)
    {
-      *flagEnter=1;
+      *FlagEnter=1;
    }
    //valida backspaces  
-   if(*caracter_recibido==0x08)
+   if(*CaracterRecibido==0x08)
    {
-      buffer[contador_buf-1]=0;
-      buffer[contador_buf-2]=0;
-      contador_buf-=2;
+      Buffer[ContadorBuf-1]=0;
+      Buffer[ContadorBuf-2]=0;
+      ContadorBuf-=2;
    }
 }
-void mostrar (int &tarea_programa, int &flagMostrar)
+void mostrar (int &TareaPrograma, int &FlagMostrar)
 {
          
-         if(tarea_programa==1&&flagMostrar==1)
+         if(TareaPrograma==1&&FlagMostrar==1)
          {
             printf("\nIngresa Opción: \t\n");
-            flagMostrar=0;
+            FlagMostrar=0;
          }
-         else if(tarea_programa==2&&flagMostrar==1)
+         else if(TareaPrograma==2&&FlagMostrar==1)
          {
             printf("\nIngresa Numero1: \t\n");
-            flagMostrar=0;
+            FlagMostrar=0;
          }
-         else if(tarea_programa==3&&flagMostrar==1)
+         else if(TareaPrograma==3&&FlagMostrar==1)
          {
             printf("\nIngresa Numero2: \t\n");
-            flagMostrar=0;
+            FlagMostrar=0;
          }
 }
 

@@ -7,17 +7,17 @@
 #use delay(clock=16000000)
 
 //declarion de variables de almacenamiento
-char opcion_ingresada;
+char OpcionIngresada;
 
 //banderas
-int tarea_programa=1;
-char bandera;
+int TareaPrograma=1;
+char Bandera;
 //echo
 
 
 //operaciones aritmeticas
 float num1,num2,resultado;
-#bit flagSerial = bandera.0
+#bit FlagSerial = Bandera.0
 //Recepcion de datos dentro del buffer
 
 void main (void)
@@ -31,69 +31,67 @@ void main (void)
    //inicio mi ciclo while
    while(1)
    {
-         if(flagEcho==1)
+         if(FlagEcho==1)
          {
-            putc(caracter_recibido);
-            flagEcho=0;
+            putc(CaracterRecibido);
+            FlagEcho=0;
          }
-         if(flagSerial == 1){
-            llenar(buffer, contador_buf, &caracter_recibido, &flagEnter);
+         if(FlagSerial == 1){
+            llenar(Buffer, ContadorBuf, &CaracterRecibido, &FlagEnter);
          }
-         mostrar(tarea_programa,flagMostrar);
-         if(flagSerial==1&&flagEnter==1)
+         mostrar(TareaPrograma,FlagMostrar);
+         if(FlagSerial==1&&FlagEnter==1)
          {
-            if(tarea_programa==1)
+            if(TareaPrograma==1)
             {
-               opcion_ingresada=buffer[0];
-               if(opcion_ingresada==('s'||'S')||opcion_ingresada==('r'||'R')||opcion_ingresada==('d'||'D')||opcion_ingresada==('m'||'M'))
+               OpcionIngresada=Buffer[0];
+               if(OpcionIngresada==('s'||'S')||OpcionIngresada==('r'||'R')||OpcionIngresada==('d'||'D')||OpcionIngresada==('m'||'M'))
                {
-                  tarea_programa=2;
+                  TareaPrograma=2;
                }
                else 
                {
-                  tarea_programa=1;
+                  TareaPrograma=1;
                }
-               contador_buf=0;
-               flagSerial=0;
-               flagEnter=0;
-               flagMostrar=1;              
+               ContadorBuf=0;
+               FlagSerial=0;
+               FlagEnter=0;
+               FlagMostrar=1;              
             }
-            else if(tarea_programa==2)
+            else if(TareaPrograma==2)
             {
-               num1=conversion(buffer,9);
-               contador_buf=0;
-               flagSerial=0;
-               flagEnter=0;
-               flagMostrar=1;
-               tarea_programa=3;
+               num1=Conversion(Buffer,9);
+               ContadorBuf=0;
+               FlagSerial=0;
+               FlagEnter=0;
+               FlagMostrar=1;
+               TareaPrograma=3;
             }
-            else if(tarea_programa==3)
+            else if(TareaPrograma==3)
             {
-               num2=conversion(buffer,9);
-               if((opcion_ingresada=='d'||opcion_ingresada=='D')&&(num2==0))
+               num2=Conversion(Buffer,9);
+               if((OpcionIngresada=='d'||OpcionIngresada=='D')&&(num2==0))
                {  
                   printf("Error");
                }
-               tarea_programa=4;
-               contador_buf=0;
-               flagMostrar=1;
-               flagSerial=0;
-               flagEnter=0;
+               TareaPrograma=4;
+               ContadorBuf=0;
+               FlagMostrar=1;
+               FlagSerial=0;
+               FlagEnter=0;
                
             }
-            else if(tarea_programa==4)
+            else if(TareaPrograma==4)
             {
-               resultado=operacion(opcion_ingresada,num1,num2);
+               resultado=operacion(OpcionIngresada,num1,num2);
                printf("\nEl resultado es: %.4f\n",resultado);
-               tarea_programa=1;
-               contador_buf=0;
-               flagMostrar=1;
-               flagSerial=0;
-               flagEnter=0;
+               TareaPrograma=1;
+               ContadorBuf=0;
+               FlagMostrar=1;
+               FlagSerial=0;
+               FlagEnter=0;
             }
          }
    }
    
 }
-
-
