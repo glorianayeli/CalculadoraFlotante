@@ -10,7 +10,7 @@ int ContadorBuf=0;
 char Buffer[9]={""};
 char CaracterRecibido;
 /*Deacuerdo a la tarea enviada y el estado de la bandera mostrar es la tarea que mandara*/
-
+int ContadorPunto=0;
 
 /*Declarando la interrupcion para la recepcion de datos del sistema*/
 //#INT_RDA
@@ -28,7 +28,7 @@ char CaracterRecibido;
 #endif 
 
 void mostrar (int &TareaPrograma, int &FlagMostrar);
-void llenar(char Buffer, int &ContadorBuf, char CaracterRecibido, int *FlagEnter);
+void llenar(char Buffer, int &ContadorBuf, char CaracterRecibido, int *FlagEnter, int &TareaPrograma);
 /*Llena el fubber con los caracteres disponible por medio 
 de la interrupcion*/
 #INT_RDA
@@ -45,6 +45,7 @@ void isrRDA (void)
 }
 void llenar (char Buffer[], int &ContadorBuf, char *CaracterRecibido, int *FlagEnter)
 {
+    
    if(*CaracterRecibido==0x0D)
    {
       *FlagEnter=1;
@@ -76,6 +77,5 @@ void mostrar (int &TareaPrograma, int &FlagMostrar)
             FlagMostrar=0;
          }
 }
-
 
 

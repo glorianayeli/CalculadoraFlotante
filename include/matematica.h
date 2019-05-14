@@ -24,7 +24,7 @@ float operacion (char opcion, float num1, float num2)
    return resultado;
 }
 //Convierte una cadena en un valor entero y lo regresa
-float Conversion (char vector[], int tamano)
+float conversion (char vector[], int tamano)
 {
    float entero;
    for(int i=0;i<=tamano;i++)
