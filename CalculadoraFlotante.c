@@ -96,7 +96,7 @@ void main (void)
             }
                if((OpcionIngresada=='d'||OpcionIngresada=='D')&&(num2==0))
                {  
-                  printf("Error");
+                  printf("ERROR");
                }
                ContadorBuf=0;
                FlagMostrar=1;
