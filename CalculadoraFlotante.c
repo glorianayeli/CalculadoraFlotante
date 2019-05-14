@@ -60,21 +60,44 @@ void main (void)
             }
             else if(TareaPrograma==2)
             {
+            if(ContadorBuf>9)
+            {
+            
+                TareaPrograma=2;
+            }
+            else
+            {
+                for(int i=0; i<=9; i++)
+                {
+                    if(Buffer[i]>=65 && Buffer[i]<=122)
+                    {
+                        printf("ERROR");
+                    }
+                }
+              }
                num1=Conversion(Buffer,9);
+               TareaPrograma=3;
+            }
                ContadorBuf=0;
                FlagSerial=0;
                FlagEnter=0;
-               FlagMostrar=1;
-               TareaPrograma=3;
+               FlagMostrar=1;           
             }
             else if(TareaPrograma==3)
             {
+            if(ContadorBuf>9)
+            {
+                TareaPrograma=3;
+            }
+            else
+            {
                num2=Conversion(Buffer,9);
+               TareaPrograma=4;
+            }
                if((OpcionIngresada=='d'||OpcionIngresada=='D')&&(num2==0))
                {  
                   printf("Error");
                }
-               TareaPrograma=4;
                ContadorBuf=0;
                FlagMostrar=1;
                FlagSerial=0;
@@ -94,4 +117,3 @@ void main (void)
          }
    }
    
-}
